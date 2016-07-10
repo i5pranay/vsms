@@ -1,0 +1,40 @@
+<%= form_tag '/create_service_types', :remote => true do -%>
+    <fieldset>
+
+      <div class="control-group">
+        <!-- servicename -->
+        <label class="control-label" for="service_name">Service Name</label>
+        <div class="controls">
+          <input type="text" id="service_name" name="s_type[service_name]" placeholder="service name" class="input-xlarge">
+        </div>
+      </div>
+
+
+      <div class="control-group">
+        <!-- cost -->
+        <label class="control-label" for="service_cost">Service cost</label>
+        <div class="controls">
+          <input type="text" id="service_cost" name="s_type[service_cost]" placeholder="service cost" class="input-xlarge">
+        </div>
+      </div>
+
+      <div class="control-group">
+        <!-- service description -->
+        <label class="control-label" for="serv_desc">Service Description</label>
+        <div class="controls">
+          <input type="text" id="serv_desc" name="s_type[serv_desc]" placeholder="serv_desc" class="input-xlarge">
+        </div>
+      </div>
+
+
+
+
+      <br>
+      <div class="control-group">
+        <!-- Button -->
+        <div class="controls">
+          <button class="btn btn-success">Submit</button>
+        </div>
+      </div>
+    </fieldset>
+<% end -%>

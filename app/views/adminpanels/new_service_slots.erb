@@ -1,0 +1,44 @@
+<%= form_tag '/create_service_slots', :remote => true do -%>
+    <fieldset>
+
+      <div class="control-group">
+      <!-- servicecentre-->
+      <label class="control-label"  for="centrename">CentreName</label>
+      <div class="controls">
+        <select id="centrename" name="slot[service_centre_id]" class="input-xlarge">
+          <option value="1">centre 1</option>
+          <option value="2">centre 2</option>
+          <option value="3">centre 3</option>
+          <option value="4">centre 4</option>
+        </select>
+      </div>
+      </div>
+
+      <div class="control-group">
+        <!-- stratslot -->
+        <label class="control-label" for="slot_start_time">Slot Start</label>
+        <div class="controls">
+          <input type="time" id="slot_start_time" name="slot[slot_start_time]" placeholder="slot_start_time" class="input-xlarge">
+        </div>
+      </div>
+
+
+      <div class="control-group">
+        <!-- stratslot -->
+        <label class="control-label" for="slot_start_time">Slot End</label>
+        <div class="controls">
+          <input type="time" id="slot_end_time" name="slot[slot_end_time]" placeholder="slot_end_time" class="input-xlarge">
+        </div>
+      </div>
+
+
+
+      <br>
+      <div class="control-group">
+        <!-- Button -->
+        <div class="controls">
+          <button class="btn btn-success">Submit</button>
+        </div>
+      </div>
+    </fieldset>
+<% end -%>

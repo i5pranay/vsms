@@ -1,0 +1,14 @@
+<%= form_tag '/update_profile', :remote => true do -%>
+    <fieldset>
+      <%= render partial: "navigations/cutomer_detail_fields" %>
+
+
+      <br>
+      <div class="control-group">
+        <!-- Button -->
+        <div class="controls">
+          <button class="btn btn-success">Submit</button>
+        </div>
+      </div>
+    </fieldset>
+<% end -%>

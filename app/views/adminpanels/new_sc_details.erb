@@ -1,0 +1,71 @@
+<%= form_tag '/create_sc_details', :remote => true do -%>
+    <fieldset>
+
+      <div class="control-group">
+        <!-- name -->
+        <label class="control-label" for="name">CentreName</label>
+        <div class="controls">
+          <input type="text" id="name" name="centre[name]" placeholder="CentreName" class="input-xlarge">
+        </div>
+      </div>
+
+      <div class="control-group">
+        <!-- address -->
+        <label class="control-label" for="address">Address</label>
+        <div class="controls">
+          <input type="text" id="address" name="centre[address]" placeholder="address" class="input-xlarge">
+        </div>
+      </div>
+
+      <div class="control-group">
+        <!-- city -->
+        <label class="control-label" for="city">City</label>
+        <div class="controls">
+          <input type="text" id="city" name="centre[city]" placeholder="city" class="input-xlarge">
+        </div>
+      </div>
+
+      <div class="control-group">
+        <!-- state -->
+        <label class="control-label" for="state">State</label>
+        <div class="controls">
+          <input type="text" id="state" name="centre[state]" placeholder="state" class="input-xlarge">
+        </div>
+      </div>
+
+      <div class="control-group">
+        <!-- pincode -->
+        <label class="control-label" for="pincode">Pincode</label>
+        <div class="controls">
+          <input type="text" id="pincode" name="centre[pincode]" placeholder="pincode" class="input-xlarge">
+        </div>
+      </div>
+
+      <div class="control-group">
+        <!-- contact -->
+        <label class="control-label" for="contact">Contact</label>
+        <div class="controls">
+          <input type="text" id="contact" name="centre[contact]" placeholder="contact" class="input-xlarge">
+        </div>
+      </div>
+
+      <div class="control-group">
+        <!-- E-mail -->
+        <label class="control-label" for="email">E-mail</label>
+        <div class="controls">
+          <input type="text" id="email" name="centre[email]" placeholder="email" class="input-xlarge">
+        </div>
+      </div>
+
+
+
+
+      <br>
+      <div class="control-group">
+        <!-- Button -->
+        <div class="controls">
+          <button class="btn btn-success">Submit</button>
+        </div>
+      </div>
+    </fieldset>
+<% end -%>

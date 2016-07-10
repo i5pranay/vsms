@@ -1,0 +1,16 @@
+<%= form_tag '/create_sr', :remote => true do -%>
+<fieldset>
+
+  <%= render partial: "navigations/vehicle_request_fileds" %>
+
+  <%= render partial: "navigations/services_fields" %>
+
+  <br>
+  <div class="control-group">
+    <!-- Button -->
+    <div class="controls">
+      <button class="btn btn-success">Submit</button>
+    </div>
+  </div>
+</fieldset>
+<% end -%>
