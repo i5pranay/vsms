@@ -3,7 +3,11 @@
 
   <%= render partial: "navigations/vehicle_request_fileds" %>
 
-  <%= render partial: "navigations/services_fields" %>
+  <%= render partial: "navigations/services_fields", locals: {
+      service_types: @service_types,
+      service_centres: @service_centres,
+      service_centre_slots: @service_centre_slots
+  } %>
 
   <br>
   <div class="control-group">

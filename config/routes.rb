@@ -24,9 +24,10 @@ Rails.application.routes.draw do
   match "show_service_slots/:ss_id" => "adminpanels#show_service_slots", :via => 'get', :as => "show_service_slots"
   match "show_service_types/:st_id" => "adminpanels#show_service_types", :via => 'get', :as => "show_service_types"
 
-  match "update_profile" => "navigations#update_profile_view", :via => 'get', :as => "edit_profile"
+  match "edit_profile" => "navigations#update_profile_view", :via => 'get', :as => "edit_profile"
   match "update_profile" => "navigations#update_profile", :via => 'post', :as => "update_profile"
 
+  match "get_slots/:sevice_centre_id" => "navigations#get_slots_by_service_centre_id",:via => 'get'
 
 
 

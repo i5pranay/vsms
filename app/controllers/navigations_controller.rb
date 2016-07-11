@@ -1,4 +1,6 @@
 class NavigationsController < ApplicationController
+  before_filter :authenticate_user! , except: [:get_slots_by_service_centre_id]
+
   def say_hello
     # render json: {status: 200, message: "Hello world!"}
     a=10
@@ -6,8 +8,10 @@ class NavigationsController < ApplicationController
   end
 
   def new_sr
+    @service_types = ServiceType.select(:id, :service_name).all()
+    @service_centres = ServiceCentre.select(:id, :name).all()
+    @service_centre_slots = ServiceCentreSlot.select(:id, :slot_start_time, :slot_end_time).all()
   end
-
 
 
   def update_profile_view
@@ -26,6 +30,43 @@ class NavigationsController < ApplicationController
 
     redirect_to show_srs_url(:c_id => @user.id)
   end
+
+
+   def get_slots_by_service_centre_id
+     sc_id = params[:sevice_centre_id]
+
+     slots = ServiceCentreSlot.select(:id, :slot_start_time,:slot_end_time,:service_centre_id)
+                 .where(service_centre_id: sc_id)
+     #gives me slots snd id of slot of selected service centre
+
+
+     response = {
+         available_slots: []
+     }
+
+
+     # **
+     # NOTE: (suppose there is condition to render at this point)
+     #render json: response and return
+
+     #json obejct and json array is initialised
+
+     slots.each do |s|
+        start_time = s.slot_start_time.strftime("%I:%M %p")
+        end_time = s.slot_end_time.strftime("%I:%M %p")
+        # taking start and end slot time in variable and converting it into proper time format
+
+        response[:available_slots] << {
+            id: s.id,
+            start_time: start_time,
+            end_time: end_time
+        }
+       #value are passed into emty hash
+     end
+
+     render json: response
+     #if this line wudnt have been here ,then this wuld start searching for view which is not here ,hence it is sending value in json formatt which is parsed
+   end
 
   private
   def persist_user
