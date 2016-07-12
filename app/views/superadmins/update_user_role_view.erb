@@ -1,0 +1,29 @@
+<%= form_tag '/update_user', :remote => true, :method => :put  do -%>
+    <fieldset>
+
+      <div class="control-group">
+        <!-- email -->
+        <label class="control-label" for="e_mail">User Email</label>
+        <div class="controls">
+          <input type="text" id="e_mail" name="email" placeholder="User E-mail" class="input-xlarge">
+        </div>
+      </div>
+
+      <div class="control-group">
+        <!-- servicecentre-->
+        <label class="control-label"  for="role">Role</label>
+        <div class="controls">
+          <select id="role" name="role" class="input-xlarge">
+            <option value="super_admin">Super Admin</option>
+            <option value="sc_owner">Service Centre Owner</option>
+            <option value="customer">Customer</option>
+          </select>
+        </div>
+      </div>
+        <!-- Button -->
+        <div class="controls">
+          <button class="btn btn-success">Submit</button>
+        </div>
+      </div>
+    </fieldset>
+<% end -%>

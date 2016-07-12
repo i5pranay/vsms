@@ -29,6 +29,9 @@ Rails.application.routes.draw do
 
   match "get_slots/:sevice_centre_id" => "navigations#get_slots_by_service_centre_id",:via => 'get'
 
+  match "update_user" => "superadmins#update_user_role_view", :via => 'get'
+  match "update_user" => "superadmins#update_user_role", :via => 'put'
+
 
 
 

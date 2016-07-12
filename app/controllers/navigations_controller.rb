@@ -1,5 +1,5 @@
 class NavigationsController < ApplicationController
-  before_filter :authenticate_user! , except: [:get_slots_by_service_centre_id]
+  before_filter :authenticate_user! , except: [:get_slots_by_service_centre_id], except: [:say_hello]
 
   def say_hello
     # render json: {status: 200, message: "Hello world!"}
@@ -67,6 +67,8 @@ class NavigationsController < ApplicationController
      render json: response
      #if this line wudnt have been here ,then this wuld start searching for view which is not here ,hence it is sending value in json formatt which is parsed
    end
+
+
 
   private
   def persist_user

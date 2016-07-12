@@ -31,10 +31,13 @@
   </div>
 </header>
 
+
 <div id="main_content" class="container">
   <% flash.each do |name, msg| %>
       <%= content_tag(:div, msg, class: "alert alert-info") %>
   <% end %>
+
+  <div id="vsms_messages"></div>
 
   <div id="content" class="col-md-9 center-block">
     <%= yield %>
