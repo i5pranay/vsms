@@ -9,14 +9,32 @@
         </div>
       </div>
 
+
+
       <div class="control-group">
         <!-- servicecentre-->
-        <label class="control-label"  for="role">Role</label>
+        <label class="control-label"  for="role_select">Role</label>
         <div class="controls">
-          <select id="role" name="role" class="input-xlarge">
+          <select id="role_select" name="role" class="input-xlarge">
             <option value="super_admin">Super Admin</option>
             <option value="sc_owner">Service Centre Owner</option>
             <option value="customer">Customer</option>
+          </select>
+        </div>
+      </div>
+
+
+      <div class="control-group">
+        <!-- servicecentre-->
+        <label class="control-label"  for="centrename">Service Centre</label>
+        <div class="controls">
+          <select id="servicecentre" name="service_centre_id" class="input-xlarge">
+            <option disabled selected value> -- selecte a service centre -- </option>
+            <% @service_centres.each do |sc| %>
+                <option value=<%= "#{sc.id}" %>><%=sc.name %></option>
+            <% end %>
+
+
           </select>
         </div>
       </div>
@@ -27,3 +45,17 @@
       </div>
     </fieldset>
 <% end -%>
+
+<script>
+  $("#role_select").change(makeServiceCenterRequired());
+
+  var makeServiceCenterRequired = function() {
+    if($(this).val() == "sc_owner" )
+      $("#servicecentre").prop('required',true);
+    else
+      $("#servicecentre").prop('required',false);
+  }
+
+
+
+</script>

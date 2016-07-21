@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160712134713) do
+ActiveRecord::Schema.define(version: 20160720195745) do
 
   create_table "addons", force: :cascade do |t|
     t.string   "part_name",  limit: 255
@@ -57,15 +57,20 @@ ActiveRecord::Schema.define(version: 20160712134713) do
   end
 
   create_table "service_centres", force: :cascade do |t|
-    t.string   "name",       limit: 100,   null: false
-    t.text     "address",    limit: 65535, null: false
-    t.string   "city",       limit: 255,   null: false
-    t.string   "state",      limit: 255,   null: false
-    t.integer  "pincode",    limit: 4,     null: false
-    t.integer  "contact",    limit: 4,     null: false
-    t.string   "email",      limit: 200,   null: false
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.string   "name",                   limit: 100,   null: false
+    t.text     "address",                limit: 65535, null: false
+    t.string   "city",                   limit: 255,   null: false
+    t.string   "state",                  limit: 255,   null: false
+    t.integer  "pincode",                limit: 4,     null: false
+    t.integer  "contact",                limit: 4,     null: false
+    t.string   "email",                  limit: 200,   null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+    t.integer  "owner_id",               limit: 4,     null: false
+    t.integer  "vehicle_id",             limit: 4,     null: false
+    t.integer  "service_centre_slot_id", limit: 4,     null: false
+    t.integer  "service_type_id",        limit: 4,     null: false
+    t.integer  "user_id",                limit: 4,     null: false
   end
 
   create_table "service_requests", force: :cascade do |t|

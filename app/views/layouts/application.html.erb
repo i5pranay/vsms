@@ -14,7 +14,11 @@
       <nav class="collapse navbar-collapse navbar-ex1-collapse">
         <% if user_signed_in? -%>
             <ul class="nav navbar-nav navbar-right">
-
+              <li><%= link_to 'listOwnerRequest', list_admin_sr_path %></li>
+              <li><%= link_to 'listCustomerrequest', list_sr_path %></li>
+              <li><%= link_to 'ServiceType', new_services_types_path %></li>
+              <li><%= link_to 'ServiceDetails', new_sc_details_path %></li>
+              <li><%= link_to 'Service slots', new_services_slots_path %></li>
               <li><%= link_to 'CustomerDetails', edit_profile_path %></li>
               <li><%= link_to 'Get Service', new_sr_path %></li>
               <li><%= link_to 'Account', edit_user_registration_path %></li>

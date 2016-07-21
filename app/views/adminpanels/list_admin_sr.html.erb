@@ -1,0 +1,61 @@
+
+
+
+
+
+
+
+<table id="list_request_in_centre" class="display" cellspacing="0" width="100%">
+  <thead>
+  <tr>
+    <th>Customer</th>
+    <th>Service Type</th>
+    <th>Vehicle Model</th>
+    <th>Vehicle Number</th>
+    <th>Request Date</th>
+    <th>Actual Bill</th>
+    <th>Centre Name</th>
+    <th>Progress</th>
+    <th>Details</th>
+  </tr>
+  </thead>
+
+  <tbody >
+  <% @final_data.each do |sr| %>
+      <tr>
+        <td > <%=sr[:user] %> </td>
+        <td > <%=sr[:service_type] %> </td>
+        <td> <%=sr[:model] %> </td>
+        <td> <%=sr[:vehicle_number] %> </td>
+        <td> <%=sr[:request_date] %> </td>
+        <td> <%=sr[:actual_bill] %> </td>
+        <td> <%=sr[:service_centre] %> </td>
+        <td > <%=sr[:state ]%> </td>
+
+      </tr>
+
+  <% end %>
+
+
+
+
+  </tbody>
+</table>
+
+
+
+</body>
+</html>
+
+
+<script>
+  // final_data = [{"number":"testsrno","request_date":"2016 53 18, 07:07","state":null,"actual_bill":0,"estimated_bill":0,"service_centre":"lucknow","service_type":"Tyre change","vehicle_number":"324890"},{"number":"testsrno","request_date":"2016 53 18, 07:07","state":null,"actual_bill":0,"estimated_bill":0,"service_centre":"lucknow","service_type":"Tyre change","vehicle_number":"324890"}];
+
+  $(document).ready(function() {
+    $('#list_request_in_centre').DataTable();
+  } );
+
+
+
+
+</script>

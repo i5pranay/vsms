@@ -5,11 +5,12 @@
       <!-- servicecentre-->
       <label class="control-label"  for="centrename">CentreName</label>
       <div class="controls">
-        <select id="centrename" name="slot[service_centre_id]" class="input-xlarge">
-          <option value="1">centre 1</option>
-          <option value="2">centre 2</option>
-          <option value="3">centre 3</option>
-          <option value="4">centre 4</option>
+        <select id="servicecentre" name="slot[service_centre_id]" class="input-xlarge">
+          <% @service_centres.each do |sc| %>
+              <option value=<%= "#{sc.id}" %>><%=sc.name %></option>
+          <% end %>
+
+
         </select>
       </div>
       </div>

@@ -3,7 +3,7 @@ class NavigationsController < ApplicationController
 
   def say_hello
     # render json: {status: 200, message: "Hello world!"}
-    a=10
+    #a=10
 
   end
 
@@ -30,6 +30,74 @@ class NavigationsController < ApplicationController
 
     redirect_to show_srs_url(:c_id => @user.id)
   end
+
+   # listing all the service request in user profile
+   def list_service_requests
+     service_requests = ServiceRequest.where(user_id: current_user.id)
+     # we have used where instead of find because where will return array of result and find returns only single result.
+
+     vehicle_ids = []
+     service_type_ids = []
+     service_centre_slot_ids = []
+     service_centre_ids = []
+     vehicles = nil
+
+     service_requests.each do |sr|
+       vehicle_ids << sr.vehicle_id
+       service_type_ids << sr.service_type_id
+       service_centre_slot_ids << sr.service_centre_slot_id
+       service_centre_ids <<  sr.service_centre_id
+     end
+
+     vehicles_by_id = {}
+     if vehicle_ids.present?
+       vehicles = Vehicle.where(id: vehicle_ids).all #.all is to be removed.
+       # SELECT `vehicles`.* FROM `vehicles` WHERE `vehicles`.`id` IN (1, 2, 3)
+
+       vehicles.each do |v|
+         vehicles_by_id[v.id] ||= v
+       #   traversing ,if this vehicle id is already there then leave else insert
+       #   suppose vehicle id 4 comes 3times then instead of taking it again and again take it only ones.
+       end
+     end
+
+     service_types_by_id = {}
+     if service_type_ids.present?
+       service_types = ServiceType.where(id: service_type_ids)
+
+       service_types.each do |v|
+         service_types_by_id[v.id] ||= v
+       end
+     end
+
+     service_centres_by_id = {}
+     if service_centre_ids.present?
+       service_centres = ServiceCentre.where(id: service_centre_ids)
+
+       service_centres.each do |v|
+         service_centres_by_id[v.id] ||= v
+       end
+     end
+
+     @final_data = []
+     service_requests.each do |sr|
+       i=10
+
+       @final_data << {
+           model: vehicles_by_id[sr.vehicle_id].model,
+           request_date: sr.created_at.strftime("%Y %M %d, %I:%m"),
+           state: sr.state,
+           actual_bill: sr.actual_bill,
+           estimated_bill: sr.estimated_bill,
+           service_centre: service_centres_by_id[sr.service_centre_id].name,
+           service_type: service_types_by_id[sr.service_type_id].service_name,
+           vehicle_number: vehicles_by_id[sr.vehicle_id].number
+       }
+     end
+
+     #render json: @final_data
+
+   end
 
 
    def get_slots_by_service_centre_id

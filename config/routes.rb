@@ -32,6 +32,13 @@ Rails.application.routes.draw do
   match "update_user" => "superadmins#update_user_role_view", :via => 'get'
   match "update_user" => "superadmins#update_user_role", :via => 'put'
 
+  # show service request of customer and all its detail in listing
+  match "list_service_requests" => "navigations#list_service_requests", :via => 'get', :as => 'list_sr'
+
+  #show service request of centreowner/admin
+  match "list_admin_sr" => "adminpanels#list_admin_sr", :via => 'get' , :as => "list_admin_sr"
+
+
 
 
 
