@@ -1,0 +1,6 @@
+<% if @is_deleted %>
+$("#row_<%= params[:centre_id] %>").remove();
+$("#vsms_messages").html("<div class='alert alert-info'><strong></strong>Successfully deleted</div>");
+<% else %>
+$("#vsms_messages").html("<div class='alert alert-danger'><strong></strong>Try again later</div>");
+<% end %>

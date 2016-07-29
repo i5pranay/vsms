@@ -1,36 +1,144 @@
 class AdminpanelsController < ApplicationController
+  include NavigationsHelper
 
   def new_sc_details
     #this will send controll to service_centre_details
+
+    #show details of service centre
+    @collect_service_centre = []
+    @service_centres =  ServiceCentre.where(owner_id: current_user.id).all
+
+    @service_centres.each do|sc|
+      @collect_service_centre << sc
+    end
+
+
   end
+
+  def edit_sc_details
+  centre_id =params[:centre_id]
+    @centre_details = ServiceCentre.where(id: centre_id).first
+
+  end
+
+   def update_edit_sc_details
+     centre_id = params[:centre][:centre_id]
+     name=params[:centre][:name]
+     email= params[:centre][:email]
+     address=params[:centre][:address]
+     contact=params[:centre][:contact]
+     city=params[:centre][:city]
+     pincode=params[:centre][:pincode]
+     state=params[:centre][:state]
+
+     ServiceCentre.where(id: centre_id).update_all(name: name , email: email, address: address, contact: contact, city: city, pincode: pincode,state: state )
+     redirect_to new_sc_details_path, flash: {notice: "centre successfully updated"}
+
+   end
+
+  def destroy_sc_detail
+    centre_id = params[:centre_id]
+    centre_to_delete = ServiceCentre.where(id: centre_id).first
+   if centre_to_delete.destroy
+     @is_deleted = true
+   else
+     @is_deleted = false
+   end
+   end
+
+
+
+
+
 
   def new_service_slots
+    @service_centre_by_id ={}
+    service_centre_ids =[]
     @service_centres = ServiceCentre.where(owner_id: current_user.id).all
+    @service_centres.each do |s|
+      service_centre_ids << s.id
+      @service_centre_by_id[s.id] ||= s
 
+    end
 
-     # this will send controll to service_centre_details
+    @service_slots = ServiceCentreSlot.where(service_centre_id:service_centre_ids )
+
+    # this will send controll to service_centre_details
   end
+
+
 
   def new_service_types
      #this will send controll to service_centre_details
+    @centre_by_id ={}
+    centre_ids =[]
+    @service_centres = ServiceCentre.where(owner_id: current_user.id).all
+    @service_centres.each do |s|
+      centre_ids << s.id
+      @centre_by_id[s.id] ||= s
+
+    end
+    @service_types = ServiceType.where(centre_id: centre_ids)
   end
 
   def create_sc_details
 
-    redirect_to show_sc_details_url(:sc_id => persist_sc_details.id)
+    persist_sc_details
+    #redirect_to show_sc_details_url(:sc_id => persist_sc_details.id)
+
   end
 
   def create_service_slots
-
-    redirect_to show_service_slots_url(:ss_id => persist_slots.id)
+    persist_slots
+    redirect_to new_services_slots_path, flash: {notice:  "slot created sucessfully!!"}
   end
+
+
+
+
 
   def create_service_types
     @service_type = ServiceType.new(s_type_params)
   #   todo handle error case
     @service_type.save
 
-    redirect_to show_service_types_url(:st_id => @service_type.id)
+redirect_to new_services_types_path , flash: {notice: "service created sucessfully!!"}
+   # redirect_to show_service_types_url(:st_id => @service_type.id)
+  end
+
+  #edit service types
+  def edit_service_type_view
+    service_type_id = params[:service_type_id]
+    @service_type = ServiceType.where(id: service_type_id).first
+    @service_centre = ServiceCentre.where(id: @service_type.centre_id).first
+
+
+
+  end
+
+   def edit_service_type
+     service_type_id = params[:s_type][:service_type_id]
+     service_name = params[:s_type][:service_name]
+     service_cost = params[:s_type][:service_cost]
+     service_desc = params[:s_type][:serv_desc]
+
+     ServiceType.where(id: service_type_id).update_all(service_name: service_name,service_cost:service_cost,serv_desc:service_desc )
+
+     redirect_to new_services_types_path, flash: {notice: " service type sucessfully updated!!"}
+
+   end
+
+  def destroy_service_type
+   service_type_id = params[:service_type_id]
+    service_type_to_delete = ServiceType.where(id: service_type_id).first
+  if  service_type_to_delete.destroy
+    @is_deleted = true
+  else
+    @is_deleted = false
+  end
+
+
+
   end
 
   def show_sc_details
@@ -46,23 +154,43 @@ class AdminpanelsController < ApplicationController
 
   end
 
-  def update_sc_details
-    
+
+  def edit_service_slot_view
+
+    slot_id = params[:slot_id]
+    @slot_details = ServiceCentreSlot.select(:service_centre_id, :slot_start_time, :slot_end_time, :id).where(id: slot_id).first
+    @service_centre = ServiceCentre.where(id: @slot_details.service_centre_id ).first
+
 
   end
 
-  def update_service_slots
+  def edit_service_slot
+    slot_id = params[:slot][:slot_id]
+    start_time = params[:slot][:slot_start_time]
+    end_time = params[:slot][:slot_end_time]
+
+    ServiceCentreSlot.where(id: slot_id).update_all(slot_start_time: start_time , slot_end_time: end_time)
+
+    redirect_to new_services_slots_path, flash: {notice: "slot successfully updated"}
+  end
+ #destroy service slot
+  def destroy_service_slot
+   slot_id = params[:slot_id]
+   slot_to_delete = ServiceCentreSlot.where(id: slot_id).first
+   if slot_to_delete.destroy
+     @is_deleted = true
+   else
+     @is_deleted = false
+   end
 
   end
 
-  def update_service_types
 
-  end
+
 
   def list_admin_sr
     service_centres  = ServiceCentre.where(owner_id: current_user.id)
     # we have used where instead of find because where will return array of result and find returns only single result.
-
 
     service_centre_ids = []
     service_centres.each do |sc|
@@ -70,84 +198,33 @@ class AdminpanelsController < ApplicationController
     end
 
     service_requests = ServiceRequest.where(service_centre_id: service_centre_ids)
-
-    vehicle_ids = []
-    service_types_ids = []
-    service_centre_slots_ids = []
-    user_ids = []
-    vehicles = nil
-
-    service_requests.each do |sr|
-      vehicle_ids << sr.vehicle_id
-      service_types_ids << sr.service_type_id
-      service_centre_slots_ids << sr.service_centre_slot_id
-      user_ids <<  sr.user_id
-    end
-
-    service_centre_by_id ={}
-    if service_centre_ids.present?
-    servicecentres = ServiceCentre.where(id: service_centre_ids )
-
-    servicecentres.each do |v|
-      service_centre_by_id[v.id] ||= v
-      end
-    end
-
-    vehicles_by_id = {}
-    if vehicle_ids.present?
-      vehicles = Vehicle.where(id: vehicle_ids).all #.all is to be removed.
-      # SELECT `vehicles`.* FROM `vehicles` WHERE `vehicles`.`id` IN (1, 2, 3)
-
-      vehicles.each do |v|
-        vehicles_by_id[v.id] ||= v
-
-      end
-    end
-
-    service_types_by_id = {}
-    if service_types_ids.present?
-      service_types = ServiceType.where(id: service_types_ids)
-
-      service_types.each do |v|
-        service_types_by_id[v.id] ||= v
-      end
-    end
-
-    users_by_id = {}
-    if user_ids.present?
-      users = User.where(id: user_ids)
-
-      users.each do |v|
-        users_by_id[v.id] ||= v
-      end
-    end
-
-    @final_data = []
-    service_requests.each do |sr|
-      a= 10
-
-      @final_data << {
-          model: vehicles_by_id[sr.vehicle_id].model,
-          request_date: sr.created_at.strftime("%Y %M %d, %I:%m"),
-          state: sr.state,
-          actual_bill: sr.actual_bill,
-          estimated_bill: sr.estimated_bill,
-          service_centre: service_centre_by_id[sr.service_centre_id].name,
-          user: users_by_id[sr.user_id].name,
-          service_type: service_types_by_id[sr.service_type_id].service_name,
-          vehicle_number: vehicles_by_id[sr.vehicle_id].number
-      }
-    end
-    a=1
+    @final_data = get_detailed_info_for_service_requests(service_requests)
 
     #render json: @final_data
-
   end
+
+   def update_service_request_view
+     request_id = params[:request_id]
+     service_requests = ServiceRequest.where(id: request_id)
+     @sr_info = get_detailed_info_for_service_requests(service_requests).first
+   end
+
+   def update_service_request
+     request_id = params[:sr][:id]
+     cost = params[:sr][:actual_bill]
+     state = params[:sr][:state]
+      ServiceRequest.where(id: request_id).update_all(actual_bill: cost, state: state)
+
+
+
+     redirect_to list_admin_sr_path ,flash: {notice: "request updated sucessfully!!"}
+   end
 
 
   private
 
   def persist_sc_details
+
     sc_detail=ServiceCentre.new(centre_params)
     # todo - handle all the error case
     sc_detail.save
@@ -163,7 +240,7 @@ class AdminpanelsController < ApplicationController
   end
 
   def centre_params
-    params.require(:centre).permit(:name, :email, :address, :city, :state, :pincode, :contact)
+    params.require(:centre).permit(:name, :email, :address, :city, :state, :pincode, :contact, :owner_id)
   end
 
   def slot_params
@@ -171,6 +248,10 @@ class AdminpanelsController < ApplicationController
   end
 
   def s_type_params
-    params.require(:s_type).permit(:service_name, :service_cost, :serv_desc)
+    params.require(:s_type).permit(:service_name, :service_cost, :serv_desc, :centre_id)
+  end
+
+  def sr_params
+    params.require(:sr).permit(:state, :actual_bill, :id)
   end
 end

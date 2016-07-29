@@ -1,4 +1,4 @@
-<%= form_tag '/update_user', :remote => true, :method => :put  do -%>
+<%= form_tag '/super_admin/update_user', :remote => true, :method => :put  do -%>
     <fieldset>
 
       <div class="control-group">
@@ -17,7 +17,7 @@
         <div class="controls">
           <select id="role_select" name="role" class="input-xlarge">
             <option value="super_admin">Super Admin</option>
-            <option value="sc_owner">Service Centre Owner</option>
+            <option value="sco">Service Centre Owner</option>
             <option value="customer">Customer</option>
           </select>
         </div>

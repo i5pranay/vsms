@@ -1,6 +1,10 @@
 <%= form_tag '/update_profile', :remote => true do -%>
     <fieldset>
-      <%= render partial: "navigations/cutomer_detail_fields" %>
+      <%= render partial: "navigations/cutomer_detail_fields", locals: {
+          user: @user
+
+      }
+      %>
 
 
       <br>

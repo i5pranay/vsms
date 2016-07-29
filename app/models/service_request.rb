@@ -6,4 +6,8 @@ class ServiceRequest < ActiveRecord::Base
   belongs_to :vehicle
 
   enum state: [ :created, :in_process, :completed ]
+
+  def self.get_all_statuses
+    ServiceRequest.states.keys
+  end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160720195745) do
+ActiveRecord::Schema.define(version: 20160728183919) do
 
   create_table "addons", force: :cascade do |t|
     t.string   "part_name",  limit: 255
@@ -57,33 +57,30 @@ ActiveRecord::Schema.define(version: 20160720195745) do
   end
 
   create_table "service_centres", force: :cascade do |t|
-    t.string   "name",                   limit: 100,   null: false
-    t.text     "address",                limit: 65535, null: false
-    t.string   "city",                   limit: 255,   null: false
-    t.string   "state",                  limit: 255,   null: false
-    t.integer  "pincode",                limit: 4,     null: false
-    t.integer  "contact",                limit: 4,     null: false
-    t.string   "email",                  limit: 200,   null: false
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
-    t.integer  "owner_id",               limit: 4,     null: false
-    t.integer  "vehicle_id",             limit: 4,     null: false
-    t.integer  "service_centre_slot_id", limit: 4,     null: false
-    t.integer  "service_type_id",        limit: 4,     null: false
-    t.integer  "user_id",                limit: 4,     null: false
+    t.string   "name",       limit: 100,   null: false
+    t.text     "address",    limit: 65535, null: false
+    t.string   "city",       limit: 255,   null: false
+    t.string   "state",      limit: 255,   null: false
+    t.integer  "pincode",    limit: 4,     null: false
+    t.integer  "contact",    limit: 4,     null: false
+    t.string   "email",      limit: 200,   null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.integer  "owner_id",   limit: 4,     null: false
   end
 
   create_table "service_requests", force: :cascade do |t|
-    t.integer  "service_centre_id",      limit: 4,                 null: false
-    t.integer  "user_id",                limit: 4,                 null: false
-    t.integer  "vehicle_id",             limit: 4,                 null: false
-    t.integer  "service_type_id",        limit: 4,                 null: false
-    t.string   "state",                  limit: 255,               null: false
-    t.float    "estimated_bill",         limit: 24,  default: 0.0
-    t.float    "actual_bill",            limit: 24,  default: 0.0
-    t.integer  "service_centre_slot_id", limit: 4,                 null: false
-    t.datetime "created_at",                                       null: false
-    t.datetime "updated_at",                                       null: false
+    t.integer  "service_centre_id",      limit: 4,                null: false
+    t.integer  "user_id",                limit: 4,                null: false
+    t.integer  "vehicle_id",             limit: 4,                null: false
+    t.integer  "service_type_id",        limit: 4,                null: false
+    t.integer  "state",                  limit: 4,                null: false
+    t.float    "estimated_bill",         limit: 24, default: 0.0
+    t.float    "actual_bill",            limit: 24, default: 0.0
+    t.integer  "service_centre_slot_id", limit: 4,                null: false
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
+    t.date     "service_date",                                    null: false
   end
 
   create_table "service_types", force: :cascade do |t|
@@ -92,6 +89,15 @@ ActiveRecord::Schema.define(version: 20160720195745) do
     t.text     "serv_desc",    limit: 65535, null: false
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+    t.integer  "centre_id",    limit: 4,     null: false
+  end
+
+  create_table "slot_capacities", force: :cascade do |t|
+    t.integer  "service_centre_slot_id", limit: 4,             null: false
+    t.date     "service_date",                                 null: false
+    t.integer  "capacity_used",          limit: 4, default: 1
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
   end
 
   create_table "users", force: :cascade do |t|

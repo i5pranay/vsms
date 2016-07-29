@@ -1,0 +1,36 @@
+<form action="/sco/update_service_request" method="post">
+
+<fieldset>
+    <div class="form-group">
+      <!-- cost -->
+      <label class="control-label" for="cost">Service Name</label>
+      <div class="controls">
+        <input type="text" id="cost" name="sr[actual_bill]" placeholder="service_bill" value="<%=@sr_info[:actual_bill] %>"   class="input-xlarge">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <!-- state -->
+
+      <label class="control-label" for="cost">Service Name</label>
+      <div class="controls">
+        <select  id="state" name="sr[state]" class="input-xlarge">
+          <%= ServiceRequest.states.each_pair do |key,value|%>
+              <option value=<%= "#{value}" %><%if (value==@sr_info[:state])%> selected <% end %>> <%= key %></option>
+             <% end %>
+
+        </select>
+
+      </div>
+    </div>
+    <input type="hidden" id="service_request_id" name="sr[id]" value="<%= @sr_info[:id] %>" class="input-xlarge">
+
+  <div class="form-group">
+    <!-- Button -->
+    <div class="controls">
+      <button class="btn btn-success btn-sm" style="margin-top: 18px">Update</button>
+    </div>
+  </div>
+</fieldset>
+
+</form>

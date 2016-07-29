@@ -2,40 +2,53 @@
   <legend class="">Vehicle Request Fields</legend>
 </div>
 
+
+
+<div class="control-group">
+  <!-- servicecentre-->
+  <label class="control-label" for="servicecentre">ServiceCentre</label>
+  <div class="controls">
+    <select id="servicecentre" name="sr[service_centre_id]" class="input-xlarge">
+      <% service_centres.each do |sc| %>
+          <option value=<%= "#{sc.id}" %>><%= sc.name %></option>
+      <% end %>
+
+
+    </select>
+  </div>
+</div>
+
+<div class="control-group">
+  <!-- date for slot-->
+  <label class="control-label" for="slotdate">date</label>
+  <div class="controls">
+    <input type="text" id="calendar" name="sr[service_date]" placeholder="Choose Date" class="input-xlarge" >
+
+  </div>
+</div>
+
+
+
 <div class="control-group">
   <!-- service type-->
   <label class="control-label" for="servicetype">ServiceType</label>
   <div class="controls">
     <select id="servicetype" name="sr[service_type_id]" class="input-xlarge">
       <% service_types.each do |st| %>
-          <option value=<%= "#{st.id}" %>><%=st.service_name %></option>
+          <option value=<%= "#{st.id}" %>><%= st.service_name %></option>
       <% end %>
     </select>
 
-  </div>
-</div>
-
-<div class="control-group">
-  <!-- servicecentre-->
-  <label class="control-label"  for="servicecentre">ServiceCentre</label>
-  <div class="controls">
-    <select id="servicecentre" name="sr[service_centre_id]" class="input-xlarge">
-      <% service_centres.each do |sc| %>
-          <option value=<%= "#{sc.id}" %>><%=sc.name %></option>
-      <% end %>
-
-
-    </select>
   </div>
 </div>
 
 <div class="control-group">
   <!-- slot-->
-  <label class="control-label"  for="serviceslot">Slot</label>
+  <label class="control-label" for="serviceslot">Slot</label>
   <div class="controls">
     <select id="serviceslot" name="sr[service_centre_slot_id]" class="input-xlarge">
       <% service_centre_slots.each do |ss| %>
-          <option value=<%= "#{ss.id}" %>><%=ss.slot_start_time.strftime("%I:%M %p") + " to " + ss.slot_end_time.strftime("%I:%M %p")%></option>
+          <option value=<%= "#{ss.id}" %>><%= ss.slot_start_time.strftime("%I:%M %p") + " to " + ss.slot_end_time.strftime("%I:%M %p") %></option>
       <% end %>
     </select>
   </div>
@@ -43,42 +56,73 @@
 
 <script>
   $("#servicecentre").change(
-      function(){
+      function () {
 
         var service_centre_id = $("#servicecentre").val();
-        var get_slots_url = "/get_slots/"+service_centre_id;
-        debugger;
-        $.ajax(
-            {
-              url: get_slots_url,
+        create_service_type_dd_async(service_centre_id);
+        create_slots_dd_async(service_centre_id);
+      }
+  );
 
-              success: function(payload){
-                console.log("received a payload from backend.");
+  var create_slots_dd_async = function (service_centre_id) {
+    var get_slots_url = "/get_slots/" + service_centre_id;
+    $.ajax(
+        {
+          url: get_slots_url,
+
+          success: function (payload) {
+            console.log("received a payload from backend.");
 //                alert("AJAX call completed");
 
-                slots_select_box = $("#serviceslot");
-                slots_select_box.empty();
+            slots_select_box = $("#serviceslot");
+            slots_select_box.empty();
 
-                $.each( payload.available_slots, function( index, value ){
-                  slots_select_box.append(new Option(value.start_time + " to " + value.end_time, value.id));
-                });
-                //to create options of a select element dynamically using jquery
+            $.each(payload.available_slots, function (index, value) {
+              slots_select_box.append(new Option(value.start_time + " to " + value.end_time, value.id));
+            });
+            //to create options of a select element dynamically using jquery
 
-                //to remove all the options of a select box and then add one option and select it with jQuery
+            //to remove all the options of a select box and then add one option and select it with jQuery
 
 
+            console.log("slot options added to dropdown");
 
-                console.log("slot options added to dropdown");
+          }
+        }
+    );
+  }
 
-              }
-            }
-        )
+  var create_service_type_dd_async = function (service_centre_id) {
+    var get_service_types_url = "/get_service_types?sc_id=" + service_centre_id;
+    $.ajax(
+        {
+          url: get_service_types_url,
 
-      }
-  )
+          success: function (response_payload) {
+            console.log("received payload from server");
 
+            service_type_id_box = $("#servicetype");
+            service_type_id_box.empty();
+
+            $.each(response_payload.available_srvtyps, function (index, element) {
+                  service_type_id_box.append(new Option(element.service_name, element.id));
+
+                }
+            )
+          },
+          error: function () {
+
+          }
+        }
+    );
+  }
+
+      $(function() {
+        $( "#calendar" ).datepicker({dateFormat: 'yy-mm-dd'});
+      });
 
 
 </script>
+
 
 

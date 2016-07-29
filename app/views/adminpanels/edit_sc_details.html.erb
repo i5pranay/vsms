@@ -1,0 +1,72 @@
+<form action="/sco/edit_sc_detail" method="post">
+<fieldset>
+
+  <div class="control-group">
+    <!-- name -->
+    <label class="control-label" for="name">CentreName</label>
+    <div class="controls">
+      <input type="text" id="name" name="centre[name]" placeholder="CentreName" value="<%= @centre_details.name %>" class="input-xlarge">
+    </div>
+  </div>
+
+  <div class="control-group">
+    <!-- address -->
+    <label class="control-label" for="address">Address</label>
+    <div class="controls">
+      <input type="text" id="address" name="centre[address]" placeholder="address" value="<%= @centre_details.address %>" class="input-xlarge">
+    </div>
+  </div>
+
+  <div class="control-group">
+    <!-- city -->
+    <label class="control-label" for="city">City</label>
+    <div class="controls">
+      <input type="text" id="city" name="centre[city]" placeholder="city"  value="<%= @centre_details.city %>" class="input-xlarge">
+    </div>
+  </div>
+
+  <div class="control-group">
+    <!-- state -->
+    <label class="control-label" for="state">State</label>
+    <div class="controls">
+      <input type="text" id="state" name="centre[state]" placeholder="state" value="<%= @centre_details.state %>"  class="input-xlarge">
+    </div>
+  </div>
+
+  <div class="control-group">
+    <!-- pincode -->
+    <label class="control-label" for="pincode">Pincode</label>
+    <div class="controls">
+      <input type="text" id="pincode" name="centre[pincode]" placeholder="pincode"value="<%= @centre_details.pincode%>"  class="input-xlarge">
+    </div>
+  </div>
+
+  <div class="control-group">
+    <!-- contact -->
+    <label class="control-label" for="contact">Contact</label>
+    <div class="controls">
+      <input type="text" id="contact" name="centre[contact]" placeholder="contact" value="<%= @centre_details.contact %>" class="input-xlarge">
+    </div>
+  </div>
+
+  <div class="control-group">
+    <!-- E-mail -->
+    <label class="control-label" for="email">E-mail</label>
+    <div class="controls">
+      <input type="text" id="email" name="centre[email]" placeholder="email" value="<%= @centre_details.email %>" class="input-xlarge">
+    </div>
+  </div>
+
+  <input type="hidden" id="centre_id" name="centre[centre_id]" value="<%= @centre_details.id %>" class="input-xlarge">
+
+
+
+  <br>
+  <div class="control-group">
+    <!-- Button -->
+    <div class="controls">
+      <button class="btn btn-success">Edit</button>
+    </div>
+  </div>
+</fieldset>
+  </form>

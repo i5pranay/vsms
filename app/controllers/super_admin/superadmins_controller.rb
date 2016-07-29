@@ -1,4 +1,4 @@
-class SuperadminsController < ApplicationController
+class SuperAdmin::SuperadminsController < ApplicationController
 
   def update_user_role_view
     @service_centres = ServiceCentre.select(:id ,:name).all

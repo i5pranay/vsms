@@ -2,8 +2,11 @@
 <html>
 <head>
   <title>Vsms</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
   <%= csrf_meta_tags %>
 </head>
 <body>
@@ -14,14 +17,24 @@
       <nav class="collapse navbar-collapse navbar-ex1-collapse">
         <% if user_signed_in? -%>
             <ul class="nav navbar-nav navbar-right">
-              <li><%= link_to 'listOwnerRequest', list_admin_sr_path %></li>
-              <li><%= link_to 'listCustomerrequest', list_sr_path %></li>
-              <li><%= link_to 'ServiceType', new_services_types_path %></li>
-              <li><%= link_to 'ServiceDetails', new_sc_details_path %></li>
-              <li><%= link_to 'Service slots', new_services_slots_path %></li>
-              <li><%= link_to 'CustomerDetails', edit_profile_path %></li>
-              <li><%= link_to 'Get Service', new_sr_path %></li>
-              <li><%= link_to 'Account', edit_user_registration_path %></li>
+              <% if current_user.role == 'sco' %>
+                  <li><%= link_to 'Service Requests', list_admin_sr_path %></li>
+                  <li><%= link_to 'Create Service Type', new_services_types_path %></li>
+                  <li><%= link_to 'Create Service Centre', new_sc_details_path %></li>
+                  <li><%= link_to 'Add slots', new_services_slots_path %></li>
+              <% end %>
+              <% if current_user.role == 'super_admin' %>
+                  <li><%= link_to 'Assign Role', "/super_admin/update_user" %></li>
+              <% end %>
+
+
+              <% if current_user.role == 'customer' %>
+                  <li><%= link_to 'Service Request', list_sr_path %></li>
+                  <li><%= link_to 'Get Service', new_sr_path %></li>
+              <% end %>
+
+              <li><%= link_to 'Profile Details', edit_profile_path %></li>
+              <li><%= link_to 'Privacy', edit_user_registration_path %></li>
               <li><%= link_to 'Sign out', destroy_user_session_path, :method => :delete %></li>
             </ul>
         <% else -%>
@@ -35,14 +48,12 @@
   </div>
 </header>
 
-
 <div id="main_content" class="container">
   <% flash.each do |name, msg| %>
       <%= content_tag(:div, msg, class: "alert alert-info") %>
   <% end %>
 
   <div id="vsms_messages"></div>
-
   <div id="content" class="col-md-9 center-block">
     <%= yield %>
   </div>

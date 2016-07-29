@@ -1,10 +1,3 @@
-
-
-
-
-
-
-
 <table id="list_request_in_centre" class="display" cellspacing="0" width="100%">
   <thead>
   <tr>
@@ -15,28 +8,28 @@
     <th>Request Date</th>
     <th>Actual Bill</th>
     <th>Centre Name</th>
+    <th>date of request</th>
     <th>Progress</th>
     <th>Details</th>
   </tr>
   </thead>
 
-  <tbody >
+  <tbody>
   <% @final_data.each do |sr| %>
       <tr>
-        <td > <%=sr[:user] %> </td>
-        <td > <%=sr[:service_type] %> </td>
-        <td> <%=sr[:model] %> </td>
-        <td> <%=sr[:vehicle_number] %> </td>
-        <td> <%=sr[:request_date] %> </td>
-        <td> <%=sr[:actual_bill] %> </td>
-        <td> <%=sr[:service_centre] %> </td>
-        <td > <%=sr[:state ]%> </td>
-
+        <td> <%= sr[:user] %> </td>
+        <td> <%= sr[:service_type] %> </td>
+        <td> <%= sr[:model] %> </td>
+        <td> <%= sr[:vehicle_number] %> </td>
+        <td> <%= sr[:request_date] %> </td>
+        <td> <%= sr[:actual_bill] %> </td>
+        <td> <%= sr[:service_centre] %> </td>
+        <td><%= sr[:request_date] %> </td>
+        <td> <%= sr[:state] %> </td>
+        <td><a href="/sco/update_service_request?request_id=<%= sr[:id] %>"> Update </a></td>
       </tr>
 
   <% end %>
-
-
 
 
   </tbody>
@@ -51,11 +44,9 @@
 <script>
   // final_data = [{"number":"testsrno","request_date":"2016 53 18, 07:07","state":null,"actual_bill":0,"estimated_bill":0,"service_centre":"lucknow","service_type":"Tyre change","vehicle_number":"324890"},{"number":"testsrno","request_date":"2016 53 18, 07:07","state":null,"actual_bill":0,"estimated_bill":0,"service_centre":"lucknow","service_type":"Tyre change","vehicle_number":"324890"}];
 
-  $(document).ready(function() {
+  $(document).ready(function () {
     $('#list_request_in_centre').DataTable();
-  } );
-
-
+  });
 
 
 </script>

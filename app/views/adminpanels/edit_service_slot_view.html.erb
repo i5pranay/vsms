@@ -1,0 +1,49 @@
+<form action="/sco/edit_slot" method="post">
+  <fieldset>
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="control-group">
+          <!-- servicecentre-->
+          <label class="control-label" for="centrename">CentreName</label>
+          <div class="controls">
+
+            <%= @service_centre.name %>
+
+          </div>
+        </div>
+        </br>
+      </div>
+      <div class="col-sm-3">
+        <div class="control-group">
+          <!-- stratslot -->
+          <label class="control-label" for="slot_start_time">Slot Start</label>
+          <div class="controls">
+            <input type="time" id="slot_start_time" name="slot[slot_start_time]" placeholder="slot_start_time" value="<%= @slot_details.slot_start_time.strftime("%H:%M:%S") %>" class="input-xlarge">
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-3">
+        <div class="control-group">
+          <!-- stratslot -->
+          <label class="control-label" for="slot_start_time">Slot End</label>
+          <div class="controls">
+            <input type="time" id="slot_end_time" name="slot[slot_end_time]" placeholder="slot_end_time" value="<%= @slot_details.slot_end_time.strftime("%H:%M:%S") %>" class="input-xlarge">
+          </div>
+        </div>
+      </div>
+
+      <input type="hidden" id="slot_start_time" name="slot[slot_id]" value="<%= @slot_details.id %>" class="input-xlarge">
+      <div class="col-sm-3">
+        <div class="control-group">
+          <!-- Button -->
+          <div class="controls">
+            <button class="btn btn-success btn-sm" style="margin-top:18px">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </fieldset>
+</form>
+

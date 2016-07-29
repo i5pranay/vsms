@@ -1,13 +1,16 @@
-<%= form_tag '/create_sr', :remote => true do -%>
+<%= form_tag '/customer/create_sr', :remote => true do -%>
 <fieldset>
-
-  <%= render partial: "navigations/vehicle_request_fileds" %>
 
   <%= render partial: "navigations/services_fields", locals: {
       service_types: @service_types,
       service_centres: @service_centres,
       service_centre_slots: @service_centre_slots
+
   } %>
+
+  <%= render partial: "navigations/vehicle_request_fileds" %>
+
+
 
   <br>
   <div class="control-group">

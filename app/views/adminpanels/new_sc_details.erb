@@ -1,4 +1,4 @@
-<%= form_tag '/create_sc_details', :remote => true do -%>
+<%= form_tag '/sco/create_sc_details', :remote => true do -%>
     <fieldset>
 
       <div class="control-group">
@@ -57,6 +57,7 @@
         </div>
       </div>
 
+      <input type="hidden" id="owner_id" name="centre[owner_id]" value="<%= current_user.id %>" class="input-xlarge">
 
 
 
@@ -68,4 +69,46 @@
         </div>
       </div>
     </fieldset>
+    </br>
+    </hr>
+    <fieldset>
+
+      <div class="control-group">
+        <table id="list_centre_names" class="display" cellspacing="0" width="100%">
+          <thead>
+          <tr>
+            <th>Centre Name</th>
+            <th>City</th>
+            <th>E-mail</th>
+            <th>Edit</th>
+            <th>Remove</th>
+          </tr>
+          </thead>
+
+          <tbody>
+          <% @collect_service_centre.each do |sc| %>
+          <tr id="row_<%= sc.id.to_s %>">
+            <td> <%=sc.name %></td>
+            <td> <%=sc.city%></td>
+            <td> <%=sc.email %></td>
+            <td> <a href="/sco/edit_sc_detail?centre_id=<%= sc.id.to_s%>"> Edit </a></td>
+            <td> <a href="/sco/destroy_sc_detail?centre_id=<%= sc.id.to_s%>"data-remote="true" data-method="delete">remove</a></td>
+          </tr>
+          <% end %>
+
+
+</tbody>
+</table>
+        </div>
+    </fieldset>
+    </br>
+    <script>
+      // final_data = [{"number":"testsrno","request_date":"2016 53 18, 07:07","state":null,"actual_bill":0,"estimated_bill":0,"service_centre":"lucknow","service_type":"Tyre change","vehicle_number":"324890"},{"number":"testsrno","request_date":"2016 53 18, 07:07","state":null,"actual_bill":0,"estimated_bill":0,"service_centre":"lucknow","service_type":"Tyre change","vehicle_number":"324890"}];
+
+      $(document).ready(function () {
+        $('#list_centre_names').DataTable();
+      });
+
+    </script>
+
 <% end -%>

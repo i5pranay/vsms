@@ -1,0 +1,51 @@
+<form action="/sco/edit_service_type" method="post">
+<fieldset>
+
+  <div class="form-group">
+
+
+    <!-- servicecentre-->
+    <label class="control-label" for="centrename">CentreName</label>
+    <div class="controls">
+     <%= @service_centre.name %>
+    </div>
+  </div>
+
+
+  <div class="form-group">
+    <!-- servicename -->
+    <label class="control-label" for="service_name">Service Name</label>
+    <div class="controls">
+      <input type="text" id="service_name" name="s_type[service_name]" placeholder="service name" value="<%= @service_type.service_name%>" class="input-xlarge">
+    </div>
+  </div>
+
+  <input type="hidden" id="servicetype" name="s_type[service_type_id]" value="<%= @service_type.id %>" class="input-xlarge">
+  <div class="form-group">
+    <!-- cost -->
+    <label class="control-label" for="service_cost">Service cost</label>
+    <div class="controls">
+      <input type="text" id="service_cost" name="s_type[service_cost]" placeholder="service cost"  value="<%= @service_type.service_cost %>" class="input-xlarge">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <!-- service description -->
+    <label class="control-label" for="serv_desc">Service Description</label>
+    <div class="controls">
+      <input type="text" id="serv_desc" name="s_type[serv_desc]" placeholder="serv_desc" value="<%= @service_type.serv_desc %>" class="input-xlarge">
+    </div>
+  </div>
+
+
+
+
+
+  <div class="form-group">
+    <!-- Button -->
+    <div class="controls">
+      <button class="btn btn-success btn-sm" style="margin-top: 18px">Submit</button>
+    </div>
+  </div>
+</fieldset>
+  </form>

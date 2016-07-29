@@ -15,26 +15,32 @@
 <table id="list_s_request" class="display" cellspacing="0" width="100%">
   <thead>
   <tr>
+    <th>Request Id</th>
     <th>Service Request Type</th>
     <th>Vehicle Model</th>
     <th>Vehicle Number</th>
     <th>Service Centre</th>
     <th>Request Date</th>
+    <th>Service Date</th>
     <th>Actual Bill</th>
     <th>State</th>
+    <th>show</th>
   </tr>
   </thead>
 
   <tbody >
   <% @final_data.each do |sr| %>
   <tr>
+    <td > <%=sr[:id] %> </td>
     <td > <%=sr[:service_type] %> </td>
     <td> <%=sr[:model] %> </td>
     <td> <%=sr[:vehicle_number] %> </td>
     <td> <%=sr[:service_centre] %> </td>
     <td> <%=sr[:request_date] %> </td>
+    <td> <%=sr[:service_date] %> </td>
     <td> <%=sr[:actual_bill] %> </td>
     <td > <%=sr[:state] %> </td>
+    <td> <a href="/customer/show_cusreq_details?req_id=<%= sr[:id].to_s%>">show</a></td>
   </tr>
     <% end %>
 

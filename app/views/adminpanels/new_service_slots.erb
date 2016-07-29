@@ -1,45 +1,108 @@
-<%= form_tag '/create_service_slots', :remote => true do -%>
-    <fieldset>
+<%= form_tag '/sco/create_service_slots', :remote => true do -%>
 
-      <div class="control-group">
-      <!-- servicecentre-->
-      <label class="control-label"  for="centrename">CentreName</label>
-      <div class="controls">
-        <select id="servicecentre" name="slot[service_centre_id]" class="input-xlarge">
-          <% @service_centres.each do |sc| %>
-              <option value=<%= "#{sc.id}" %>><%=sc.name %></option>
-          <% end %>
+    <div class="container">
+      <fieldset>
 
 
-        </select>
-      </div>
-      </div>
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="control-group">
 
-      <div class="control-group">
-        <!-- stratslot -->
-        <label class="control-label" for="slot_start_time">Slot Start</label>
-        <div class="controls">
-          <input type="time" id="slot_start_time" name="slot[slot_start_time]" placeholder="slot_start_time" class="input-xlarge">
+
+              <!-- servicecentre-->
+              <label class="control-label" for="centrename">CentreName</label>
+              <div class="controls">
+                <select id="servicecentre" name="slot[service_centre_id]" class="input-xlarge">
+                  <% @service_centres.each do |sc| %>
+                      <option value=<%= "#{sc.id}" %>><%= sc.name %></option>
+                  <% end %>
+
+
+                </select>
+              </div>
+            </div>
+            </br>
+          </div>
+          <div class="col-sm-3">
+            <div class="control-group">
+              <!-- stratslot -->
+              <label class="control-label" for="slot_start_time">Slot Start</label>
+              <div class="controls">
+                <input type="time" id="slot_start_time" name="slot[slot_start_time]" placeholder="slot_start_time" class="input-xlarge">
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="control-group">
+              <!-- stratslot -->
+              <label class="control-label" for="slot_start_time">Slot End</label>
+              <div class="controls">
+                <input type="time" id="slot_end_time" name="slot[slot_end_time]" placeholder="slot_end_time" class="input-xlarge">
+              </div>
+            </div>
+          </div>
+
+
+          <br>
+          <div class="col-sm-3">
+            <div class="control-group">
+              <!-- Button -->
+              <div class="controls">
+                <button class="btn btn-success">Add</button>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
 
+      </fieldset>
+      <hr/>
 
+      <!--show all the slots of current owner -->
       <div class="control-group">
-        <!-- stratslot -->
-        <label class="control-label" for="slot_start_time">Slot End</label>
-        <div class="controls">
-          <input type="time" id="slot_end_time" name="slot[slot_end_time]" placeholder="slot_end_time" class="input-xlarge">
-        </div>
-      </div>
+        <table id="list_centre_slots" class="display" cellspacing="0" width="100%">
+          <thead>
+          <tr>
+            <th>Centre Name</th>
+            <th>Start slot</th>
+            <th>End Slot</th>
+            <th>Edit</th>
+            <th>Remove</th>
+          </tr>
+          </thead>
+
+          <tbody>
+
+          <% @service_slots.each do |ss| %>
+
+              <tr id="row_<%= ss.id.to_s %>">
+                <td><%= @service_centre_by_id[ss.service_centre_id].name %> </td>
+                <td> <%= ss.slot_start_time.strftime('%H:%M:%S') %>  </td>
+                <td> <%= ss.slot_end_time.strftime('%H:%M:%S') %> </td>
+                <td> <a href="/sco/edit_slot?slot_id=<%= ss.id.to_s%>">Edit</a></td>
+                <td> <a  id="remove" href="/sco/destroy_service_slot?slot_id=<%= ss.id.to_s%>" data-remote="true" data-method="delete">Remove</a> </td>
+
+
+              </tr>
+<% end %>
+
+              </tbody>
+              </table>
+
+
+              </div>
+              </div>
+
+              <script>
+                // final_data = [{"number":"testsrno","request_date":"2016 53 18, 07:07","state":null,"actual_bill":0,"estimated_bill":0,"service_centre":"lucknow","service_type":"Tyre change","vehicle_number":"324890"},{"number":"testsrno","request_date":"2016 53 18, 07:07","state":null,"actual_bill":0,"estimated_bill":0,"service_centre":"lucknow","service_type":"Tyre change","vehicle_number":"324890"}];
+
+                $(document).ready(function () {
+                  $('#list_centre_slots').DataTable();
+                });
 
 
 
-      <br>
-      <div class="control-group">
-        <!-- Button -->
-        <div class="controls">
-          <button class="btn btn-success">Submit</button>
-        </div>
-      </div>
-    </fieldset>
-<% end -%>
+
+              </script>
+
+          <% end -%>

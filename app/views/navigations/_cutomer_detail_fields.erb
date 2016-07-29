@@ -5,7 +5,7 @@
   <!-- Username -->
   <label class="control-label"  for="username">Username</label>
   <div class="controls">
-    <input type="text" id="username" name="user[name]" placeholder="username" class="input-xlarge">
+    <input type="text" id="username" name="user[name]" placeholder="username"  value= "<%= user.name %>" class="input-xlarge">
   </div>
 </div>
 
@@ -13,7 +13,7 @@
   <!-- Password-->
   <label class="control-label" for="address">Address</label>
   <div class="controls">
-    <input type="text" id="adress" name="user[address]" placeholder="address" class="input-xlarge">
+    <input type="text" id="adress" name="user[address]" placeholder="address"   value= "<%= user.address %>" class="input-xlarge">
 
   </div>
 </div>
@@ -22,7 +22,7 @@
   <!-- Password -->
   <label class="control-label"  for="contact_no">Contact</label>
   <div class="controls">
-    <input type="text" id="contact_no" name="user[contact_no]" placeholder="contact" class="input-xlarge">
+    <input type="text" id="contact_no" name="user[contact_no]" placeholder="contact"  value= "<%= user.contact_no %>" class="input-xlarge">
   </div>
 </div>
 
@@ -30,7 +30,7 @@
   <!-- City -->
   <label class="control-label"  for="city">city</label>
   <div class="controls">
-    <input type="text" id="city" name="user[city]" placeholder="city" class="input-xlarge">
+    <input type="text" id="city" name="user[city]" placeholder="city"   value= "<%= user.city %>" class="input-xlarge">
   </div>
 </div>
 
@@ -38,7 +38,7 @@
   <!-- State -->
   <label class="control-label"  for="state">State</label>
   <div class="controls">
-    <input type="text" id="state" name="user[state]" placeholder="state" class="input-xlarge">
+    <input type="text" id="state" name="user[state]" placeholder="state"   value= "<%= user.state %>" class="input-xlarge">
   </div>
 </div>
 
@@ -46,6 +46,8 @@
   <!-- pincode -->
   <label class="control-label"  for="pincode">Pincode</label>
   <div class="controls">
-    <input type="text" id="pincode" name="user[pincode]" placeholder="pincode" class="input-xlarge">
+    <input type="text" id="pincode" name="user[pincode]" placeholder="pincode"   value= "<%= user.pincode %>" class="input-xlarge">
   </div>
 </div>
+
+<input type="hidden" id="username_id" name="user[id]" value="<%=user.id %>">

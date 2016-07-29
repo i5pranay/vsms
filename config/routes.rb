@@ -11,32 +11,57 @@ Rails.application.routes.draw do
   #match "user(/:user_identifier)" => "users#show_user", :via => 'get', :as => "show_user", :constraints => {:user_identifier => /[^\/]+/}
   match "helloruby" => "navigations#say_hello", :via => 'get', :as => "say_hello"
 
-  match "new_sr" => "navigations#new_sr", :via => 'get', :as => "new_sr"
-  match "create_sr" => "navigations#create_service_request", :via => 'post', :as => "create_sr"
-  match "show_service_requests/:c_id" => "navigations#show_srs", :via => 'get', :as => "show_srs"
-  match "new_sc_details" =>"adminpanels#new_sc_details", :via => 'get', :as => "new_sc_details"
-  match "new_service_slots" =>"adminpanels#new_service_slots", :via => 'get', :as => "new_services_slots"
-  match "new_service_types" =>"adminpanels#new_service_types", :via => 'get', :as => "new_services_types"
-  match "create_sc_details" => "adminpanels#create_sc_details", :via => 'post', :as => "create_sc_details"
-  match "create_service_slots" =>"adminpanels#create_service_slots", :via => 'post', :as => "create_service_slots"
-  match "create_service_types" =>"adminpanels#create_service_types", :via => 'post', :as => "create_service_types"
-  match "show_sc_details/:sc_id" => "adminpanels#show_sc_details", :via => 'get', :as => "show_sc_details"
-  match "show_service_slots/:ss_id" => "adminpanels#show_service_slots", :via => 'get', :as => "show_service_slots"
-  match "show_service_types/:st_id" => "adminpanels#show_service_types", :via => 'get', :as => "show_service_types"
-
+  match "get_service_types" => "navigations#get_service_type_by_id", :via => 'get'
+  match "get_slots/:sevice_centre_id" => "navigations#get_slots_by_service_centre_id",:via => 'get'
   match "edit_profile" => "navigations#update_profile_view", :via => 'get', :as => "edit_profile"
   match "update_profile" => "navigations#update_profile", :via => 'post', :as => "update_profile"
 
-  match "get_slots/:sevice_centre_id" => "navigations#get_slots_by_service_centre_id",:via => 'get'
-
-  match "update_user" => "superadmins#update_user_role_view", :via => 'get'
-  match "update_user" => "superadmins#update_user_role", :via => 'put'
-
+  match "customer/new_sr" => "navigations#new_sr", :via => 'get', :as => "new_sr"
+  match "customer/create_sr" => "navigations#create_service_request", :via => 'post', :as => "create_sr"
+  match "customer/show_cusreq_details" => "navigations#show_srs", :via => 'get', :as => "show_srs"
   # show service request of customer and all its detail in listing
-  match "list_service_requests" => "navigations#list_service_requests", :via => 'get', :as => 'list_sr'
+  match "customer/list_service_requests" => "navigations#list_service_requests", :via => 'get', :as => 'list_sr'
 
+  match "sco/new_sc_details" =>"adminpanels#new_sc_details", :via => 'get', :as => "new_sc_details"
+  match "sco/new_service_slots" =>"adminpanels#new_service_slots", :via => 'get', :as => "new_services_slots"
+  match "sco/new_service_types" =>"adminpanels#new_service_types", :via => 'get', :as => "new_services_types"
+  match "sco/create_sc_details" => "adminpanels#create_sc_details", :via => 'post', :as => "create_sc_details"
+
+  match "sco/edit_sc_detail" => "adminpanels#edit_sc_details", :via => 'get' , :as =>  "form_edit_sc_detail"
+  match "sco/edit_sc_detail" => "adminpanels#update_edit_sc_details", :via => 'post' , :as =>  "edit_sc_detail"
+  #destroy centre
+  match "sco/destroy_sc_detail" => "adminpanels#destroy_sc_detail" , :via => 'delete'
+
+  match "sco/create_service_slots" =>"adminpanels#create_service_slots", :via => 'post', :as => "create_service_slots"
+  match "sco/create_service_types" =>"adminpanels#create_service_types", :via => 'post', :as => "create_service_types"
+  #edit service type
+  match "sco/edit_service_type" => "adminpanels#edit_service_type_view", :via => 'get', :as => "edit_st_view"
+  match "sco/edit_service_type" => "adminpanels#edit_service_type", :via => 'post', :as => "edit_st"
+
+  #destroy service type
+  match "sco/destroy_service_type" => "adminpanels#destroy_service_type" , :via => 'delete'
+
+  match "sco/show_sc_details/:sc_id" => "adminpanels#show_sc_details", :via => 'get', :as => "show_sc_details"
+  match "sco/show_service_slots/:ss_id" => "adminpanels#show_service_slots", :via => 'get', :as => "show_service_slots"
+  match "sco/show_service_types/:st_id" => "adminpanels#show_service_types", :via => 'get', :as => "show_service_types"
+  match "sco/destroy_service_slot" =>  "adminpanels#destroy_service_slot", :via =>  'delete'
   #show service request of centreowner/admin
-  match "list_admin_sr" => "adminpanels#list_admin_sr", :via => 'get' , :as => "list_admin_sr"
+  match "sco/list_admin_sr" => "adminpanels#list_admin_sr", :via => 'get' , :as => "list_admin_sr"
+  match "sco/edit_slot" => "adminpanels#edit_service_slot_view", :via => 'get' , :as => "form_edit_slot"
+  match "sco/edit_slot" => "adminpanels#edit_service_slot", :via => 'post' , :as => "edit_slot"
+  match "sco/update_service_request" => "adminpanels#update_service_request_view", :via => 'get', :as => "updtae_sr"
+  match "sco/update_service_request" => "adminpanels#update_service_request", :via => 'post', :as => "updtae_servreq"
+
+  namespace :super_admin do
+    match "update_user" => "superadmins#update_user_role_view", :via => 'get', :as => 'update_user'
+    match "update_user" => "superadmins#update_user_role", :via => 'put'
+  end
+
+  #show all the service types,slots,and service centre of present owner
+  #match "owner_index" => "adminpanels#owner_index", :via => 'get' , :as => "owner_index"
+
+
+
 
 
 
