@@ -15,8 +15,10 @@ class NavigationsController < ApplicationController
   end
 
 
-  def update_profile_view
+  def
+  update_profile_view
     @user = current_user
+    a=10
   end
 
   def update_profile
@@ -27,15 +29,28 @@ class NavigationsController < ApplicationController
   end
 
   def create_service_request
-    validate_update_capacity(params)
+    ActiveRecord::Base.transaction do
+      validate_update_capacity(params)
 
-    params[:vehicle][:user_id] = current_user.id
-    @vehicle = Vehicle.find_or_create_vehicle(params)
+      params[:vehicle][:user_id] = current_user.id
+      @vehicle = Vehicle.find_or_create_vehicle(params)
 
-    @sr = persist_service_request(@vehicle)
+      @sr = persist_service_request(@vehicle)
+      #redirect_to show_srs_url(:c_id => @user.id)
+      @msg = "Successfully created service request with request id: " + @sr.id.to_s
+      @html_class = "alert-info"
+    end
 
-    redirect_to new_sr_path, flash: {notice: "Servicerequest successfully generated"}
-    #redirect_to show_srs_url(:c_id => @user.id)
+  rescue Exception => e
+    @msg = e.message
+    @html_class = "alert-danger"
+
+    logger.debug e.backtrace.join("\n")
+
+    flash.alert = "Something went wrong while creating SR!"
+
+
+
   end
 
   # listing all the service request in user profile
@@ -49,10 +64,11 @@ class NavigationsController < ApplicationController
   end
 
   def show_srs
-    req_id = params[:req_id]
-    service_request = ServiceRequest.where(id: req_id)
-    @sr_info = get_detailed_info_for_service_requests(service_request).first
-
+    @req_id = params[:req_id]
+    if @req_id.present?
+      service_request = ServiceRequest.where(id: @req_id)
+      @sr_info = get_detailed_info_for_service_requests(service_request).first
+    end
   end
 
 
