@@ -1,8 +1,10 @@
-<form>
+
   TRACK REQUEST
   <br>
   <input class="input-sm" type="text" placeholder="Enter Tracking Id" id="trackingId"/>
   <button class="btn btn-sm" id="trackButton">Get Info</button>
+
+
 
   <hr>
   <% if @req_id.present? %>
@@ -17,7 +19,7 @@
       <p><strong>ACTUAL BILL:</strong> <%= @sr_info[:actual_bill] %> </p></br>
       <p><strong>STATE</strong> <%= @sr_info[:state] %></p></br>
   <% end %>
-</form>
+
 
 
 

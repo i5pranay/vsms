@@ -1,10 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <style>
+    .navbar-inner
+    {
+      background-color: #555;
+    }
+     #head {
+        color: #fff
+
+      }
+
+    </style>
   <title>Vsms</title>
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+  <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
   <%= csrf_meta_tags %>
@@ -18,30 +30,37 @@
         <% if user_signed_in? -%>
             <ul class="nav navbar-nav navbar-right">
               <% if current_user.role == 'sco' %>
-                  <li><%= link_to 'Service Requests', list_admin_sr_path %></li>
-                  <li><%= link_to 'Create Service Type', new_services_types_path %></li>
-                  <li><%= link_to 'Create Service Centre', new_sc_details_path %></li>
-                  <li><%= link_to 'Add slots', new_services_slots_path %></li>
+                  <li><a id="head" href="<%= list_admin_sr_path %>">Service Requests</a></li>
+                  <li><a id="head" href="<%= new_services_types_path %>">Create Service Type</a></li>
+                  <li><a id="head" href="<%= new_sc_details_path %>">Create Service Centre</a></li>
+                  <li><a id="head" href="<%= new_services_slots_path %>">Add slots</a></li>
               <% end %>
               <% if current_user.role == 'super_admin' %>
-                  <li><%= link_to 'Assign Role', "/super_admin/update_user" %></li>
+                  <li><a href="<%= "/super_admin/update_user" %>">Assign Role</a></li>
               <% end %>
 
 
               <% if current_user.role == 'customer' %>
-                  <li><%= link_to 'Service Request', list_sr_path %></li>
-                  <li><%= link_to 'Get Service', new_sr_path %></li>
+                  <li><a id="head" href="<%= list_sr_path %>">Service Request</a></li>
+                  <li><a id="head" href="<%= new_sr_path %>">Get Service</a></li>
               <% end %>
 
-              <li><%= link_to 'Track Request', "/customer/show_cusreq_details" %></li>
-              <li><%= link_to 'Profile Details', edit_profile_path %></li>
-              <li><%= link_to 'Privacy', edit_user_registration_path %></li>
-              <li><%= link_to 'Sign out', destroy_user_session_path, :method => :delete %></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-left: 10px; padding-right: 18px; margin-right: 3px; color:#fff;" aria-expanded="true">
+                  <b class="caret"></b></a>
+                <ul class="dropdown-menu" style="margin-top: -1px;">
+
+                  <li><a href="<%= "/customer/show_cusreq_details" %>">Track Request</a></li>
+                  <li><a href="<%= edit_profile_path %>">Profile Details</a></li>
+                  <li><a href="<%= edit_user_registration_path %>">Privacy</a></li>
+                  <li><%= link_to 'Sign out', destroy_user_session_path, :method => :delete %></li>
+                </ul>
+              </li>
             </ul>
         <% else -%>
             <ul class="nav navbar-nav pull-right">
-              <li><%= link_to 'Sign up', new_user_registration_path %></li>
-              <li><%= link_to 'Sign in', new_user_session_path %></li>
+              <li><a id="head" href="<%= new_user_registration_path %>">Sign up</a></li>
+              <li><a id="head" href="<%= new_user_session_path %>">Sign in</a></li>
             </ul>
         <% end -%>
       </nav>

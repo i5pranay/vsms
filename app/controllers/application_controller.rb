@@ -7,10 +7,14 @@ class ApplicationController < ActionController::Base
   before_filter :validate_authenticity
 
   def validate_authenticity
-    prefix = request.path.split("/")[1]
- a=10;
-    if ["sco", "customer", "super_admin"].include?(prefix)
-      redirect_to root_url, flash: { error: "Caught you!.. Not authenticated to access this url!.."} if current_user.role != prefix
+    path = request.path
+    track_path = "/customer/show_cusreq_details"
+    if path != track_path
+      prefix = request.path.split("/")[1]
+      a=10;
+      if ["sco", "customer", "super_admin"].include?(prefix)
+        redirect_to root_url, flash: {error: "Caught you!.. Not authenticated to access this url!.."} if current_user.role != prefix
+      end
     end
   end
 end
