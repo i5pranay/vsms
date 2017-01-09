@@ -1,8 +1,12 @@
 
   TRACK REQUEST
   <br>
-  <input class="input-sm" type="text" placeholder="Enter Tracking Id" id="trackingId"/>
-  <button class="btn btn-sm" id="trackButton">Get Info</button>
+  <form id="form">
+  <input  class="input-sm" type="text" placeholder="Enter Tracking Id" id="trackingId"/>
+  <!--<button class="btn btn-sm" id="trackButton">Get Info</button> -->
+    <input type="submit" value="Get Info" id="trackButton" >
+    </form>
+
 
 
 
@@ -24,16 +28,27 @@
 
 
 <script>
-  $("#trackButton").click(
-      function () {
-        trackingId = $("#trackingId").val();
 
-        if (trackingId == "") {
-          $("#vsms_messages").html("<div class='alert alert-danger'><strong></strong>Please enter a tracking id.</div>");
-          return;
-        }
-        window.open("/customer/show_cusreq_details?req_id=" + trackingId, "_self");
+    $("#trackButton").click(function (event) {
+      var obj=10;
+      event.preventDefault();
+      //return
+      debugger;
 
+      console.log("mrinal");
+      obj = trackingId = $("#trackingId").val();
+
+      if (trackingId == "") {
+        $("#vsms_messages").html("<div class='alert alert-danger'><strong></strong>Please enter a tracking id.</div>");
+        return;
       }
-  )
+      window.open("/customer/show_cusreq_details?req_id=" + trackingId, "_self");
+
+      if (event.which == 13) {
+       // event.preventDefault();
+        return;
+        $("form").submit();
+      }
+    } );
+
 </script>
